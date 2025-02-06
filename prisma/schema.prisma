@@ -18,15 +18,28 @@ model Customer {
   @@map("customers")
 }
 
+model EnvironmentEnum {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  created_at  DateTime      @default(now())
+  updated_at  DateTime?     @updatedAt
+  Environment Environment[]
+
+  @@map("environment_enum")
+}
+
 model Environment {
   id          String @id @default(cuid())
-  environment String
   url_pi      String
   user_pi     String
   password_pi String
   url_ci      String
   user_ci     String
   password_ci String
+
+  environment    EnvironmentEnum @relation(fields: [environment_id], references: [id])
+  environment_id String
 
   customer    Customer @relation(fields: [customer_id], references: [id])
   customer_id String   @unique

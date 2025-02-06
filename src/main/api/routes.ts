@@ -3,6 +3,10 @@ import { makeCustomerController } from '../container-injection/make-customer-con
 import { makeCustomerReadController } from '../container-injection/make-read-customer-controller'
 
 export async function appRouters(app: FastifyInstance) {
-  app.post('/customer', makeCustomerController().handle)
-  app.get('/customer', makeCustomerReadController().handle)
+  app.post('/customers', makeCustomerController().handle)
+  app.get('/customers', makeCustomerReadController().handle)
+
+  app.get('/health', async () => {
+    return { status: 'ok' }
+  })
 }
